@@ -77,11 +77,5 @@ public interface Function {
 			}
 			return i / resolution;
 		}
-		
-		private final static double
-				LN_2 = Math.log(2);
-		private final static double log2(double x) {
-			return Math.log(x) / LN_2;
-		}
 	}
 }

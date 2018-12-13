@@ -131,7 +131,7 @@ public class Canvas extends JPanel implements KeyListener, MouseListener, MouseW
 		
 		this.gfx_tx = - gfx_w_2;
 		this.gfx_ty = - gfx_h_2;
-		if(gfx_w <= gfx_h) {
+		if(gfx_w >= gfx_h) {
 			this.gfx_sx = 4. / gfx_w;
 			this.gfx_sy = 4. / gfx_w;
 		} else {
@@ -153,10 +153,6 @@ public class Canvas extends JPanel implements KeyListener, MouseListener, MouseW
 				Transparency.OPAQUE
 				);
 		this.gfx = gfx_img.createGraphics();
-		this.gfx.setRenderingHint(
-				RenderingHints.KEY_ANTIALIASING,
-				RenderingHints.VALUE_ANTIALIAS_ON
-				);
 		
 		this.setFocusable(true);
 		this.addKeyListener(this);
@@ -164,6 +160,105 @@ public class Canvas extends JPanel implements KeyListener, MouseListener, MouseW
 		this.addMouseWheelListener(this);
 		this.addMouseMotionListener(this);
 	}
+	
+	public void set_function_schema(Function function, Schema schema) {
+		this.schema = schema;
+		this.function = function;		
+		this.handle_gfx_changed();
+	}
+	
+	public void set_function(Function function) {
+		this.function = function;
+		this.handle_gfx_changed();
+	}
+	
+	public void set_schema(Schema schema) {
+		this.schema = schema;
+		this.handle_gfx_changed();
+	}	
+	
+	public void set_gfx_aspect_ratio(
+			int gfx_aspect_dx,
+			int gfx_aspect_dy
+			) {		
+		this.gfx_aspect_dx = gfx_aspect_dx;
+		this.gfx_aspect_dy = gfx_aspect_dy;
+		this.handle_gfx_changed();
+	}
+	
+	public void set_gfx_aspect_resolution(
+			int gfx_aspect_dx,
+			int gfx_aspect_dy,
+			int gfx_resolution
+			) {
+		this.gfx_aspect_dx = gfx_aspect_dx;
+		this.gfx_aspect_dy = gfx_aspect_dy;
+		this.gfx_resolution = gfx_resolution;		
+		this.handle_gfx_changed();
+	}
+	
+	public void set_gfx_aspect_dx(int gfx_aspect_dx) {
+		this.gfx_aspect_dx = gfx_aspect_dx;
+		this.handle_gfx_changed();
+	}
+	
+	public void set_gfx_aspect_dy(int gfx_aspect_dy) {
+		this.gfx_aspect_dy = gfx_aspect_dy;
+		this.handle_gfx_changed();
+	}
+	
+	public void set_gfx_resolution(int gfx_resolution) {
+		this.gfx_resolution = gfx_resolution;
+		handle_gfx_changed();
+	}
+	
+	public void handle_gfx_changed() {
+		double
+			_gfx_w = this.gfx_w,
+			_gfx_h = this.gfx_h,
+			_gfx_w_2 = this.gfx_w_2,
+			_gfx_h_2 = this.gfx_h_2;
+		this.gfx_w = this.gfx_aspect_dx * this.gfx_resolution;
+		this.gfx_h = this.gfx_aspect_dy * this.gfx_resolution;
+		this.gfx_w_2 = this.gfx_w / 2;
+		this.gfx_h_2 = this.gfx_h / 2;
+		double
+			sx = (double)canvas_w / gfx_w,
+			sy = (double)canvas_h / gfx_h;
+		if(sx <= sy) {
+			this.canvas_sx =  sx;
+			this.canvas_sy = -sx;
+		} else {
+			this.canvas_sx =  sy;
+			this.canvas_sy = -sy;
+		}
+		this.gfx_sx *= (_gfx_w / gfx_w);
+		this.gfx_sy *= (_gfx_h / gfx_h);
+		this.gfx_tx = (gfx_tx + _gfx_w_2) * (gfx_w / _gfx_w) - gfx_w_2;
+		this.gfx_ty = (gfx_ty + _gfx_h_2) * (gfx_h / _gfx_h) - gfx_h_2;
+		this.gfx_img = new BufferedImage(
+				gfx_w,
+				gfx_h,
+				Transparency.OPAQUE
+				);
+		this.gfx = gfx_img.createGraphics();
+		/*
+		if(gfx_w >= gfx_h) {
+			this.gfx_sx = 4. / gfx_w;
+			this.gfx_sy = 4. / gfx_w;
+		} else {
+			this.gfx_sx = 4. / gfx_h;
+			this.gfx_sy = 4. / gfx_h;
+		}
+		
+		*/
+		//this.gfx_tx = - gfx_w_2;
+		//this.gfx_ty = - gfx_h_2;
+		repaint = true;
+		repaint();
+	}
+	
+	
 	
 	@Override
 	public void paintComponent(Graphics g) {
