@@ -67,8 +67,8 @@ public interface Function {
 				d = y,
 				i;
 			for(i = 0; i < resolution; i ++) {
-				double r = Math.sqrt(c * c + d * d);
-				if(r > 2) break;				
+				double r = c*c + d*d;//Math.sqrt(c * c + d * d);
+				if(r > 4) break;				
 				double
 					j = (c*c - d*d),
 					k = (c*d + d*c);
@@ -76,6 +76,12 @@ public interface Function {
 				d = b + k;
 			}
 			return i / resolution;
-		}		
+		}
+		
+		private final static double
+				LN_2 = Math.log(2);
+		private final static double log2(double x) {
+			return Math.log(x) / LN_2;
+		}
 	}
 }

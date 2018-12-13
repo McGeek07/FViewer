@@ -11,28 +11,38 @@ import fv.gui.Schema;
 
 public class FViewer {
 	public final static int
-			CANVAS_W = 1366,
-			CANVAS_H =  768,
+			CANVAS_W = 640,
+			CANVAS_H =  480,
 			GFX_ASPECT_DX = 4,
 			GFX_ASPECT_DY = 3,
 			GFX_RESOLUTION = 128;
 	public final static Schema
 			SCHEMA = new Schema(
 					new Color[] {
-							Color.BLACK,
-							Color.RED,
-							Color.YELLOW,
+							Color.WHITE,
+							Color.CYAN,
+							Color.BLUE,
+							Color.CYAN,
+							Color.WHITE,
+							Color.CYAN,
+							Color.BLUE,
+							Color.CYAN,
 							Color.WHITE
 					},
 					new double[] {
 							0.0,
 							0.2,
+							0.4,
+							0.5,
+							0.6,
+							0.7,
+							0.8,
 							0.9,
 							1.0
 					}
 					);
 	public final static Function
-			FUNCTION = new Mandelbrot(256);
+			FUNCTION = new Mandelbrot(512);
 	public static void main(String[] args) {
 		JFrame viewer = new JFrame("FViewer");
 		Canvas canvas = new Canvas(
