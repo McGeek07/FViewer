@@ -11,6 +11,8 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JSlider;
 import javax.swing.JTextField;
+import javax.swing.UIManager;
+import javax.swing.UnsupportedLookAndFeelException;
 
 import sv.sketch.Canvas;
 import sv.sketch.Mandelbrot1;
@@ -34,6 +36,21 @@ public class SketchView {
 	
 	
 	public static void main(String[] args) {
+		try {
+			UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+		} catch (ClassNotFoundException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		} catch (InstantiationException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		} catch (IllegalAccessException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		} catch (UnsupportedLookAndFeelException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
 		Canvas canvas = new Canvas(
 				CANVAS_W,
 				CANVAS_H,
@@ -61,12 +78,11 @@ public class SketchView {
 		schema_panel.setLayout(new BorderLayout());
 		sketch_panel.setLayout(new BorderLayout());
 		
-		JLabel
-				gfx_label = new JLabel("GFX Resolution "),
-				itr_label = new JLabel("ITR Resolution "),
-				schema_label = new JLabel("Schema Select "),
-				sketch_label = new JLabel("Sketch Select ");
-		
+		JTextField
+				gfx_label = new JTextField("GFX Resolution ", 8),
+				itr_label = new JTextField("ITR Resolution ", 8),
+				schema_label = new JTextField("Schema Select ", 8),
+				sketch_label = new JTextField("Sketch Select ", 8);		
 		JSlider
 				gfx_slider = new JSlider(MIN_GFX_RESOLUTION, MAX_GFX_RESOLUTION,  GFX_RESOLUTION),
 				itr_slider = new JSlider(MIN_ITR_RESOLUTION, MAX_ITR_RESOLUTION,  ITR_RESOLUTION),
@@ -77,6 +93,10 @@ public class SketchView {
 				itr_textfield = new JTextField("" + ITR_RESOLUTION, 4),
 				schema_textfield = new JTextField(SCHEMA_NAMES[0], 16),
 				sketch_textfield = new JTextField(SKETCH_NAMES[0], 16);
+		gfx_label.setEditable(false);
+		itr_label.setEditable(false);
+		schema_label.setEditable(false);
+		sketch_label.setEditable(false);
 		gfx_slider.addChangeListener((e) -> {
 			int gfx_resolution = gfx_slider.getValue();
 			canvas.set_gfx_resolution(gfx_resolution);
