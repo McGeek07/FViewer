@@ -13,7 +13,9 @@ import javax.swing.JSlider;
 import javax.swing.JTextField;
 
 import sv.sketch.Canvas;
+import sv.sketch.Mandelbrot1;
 import sv.sketch.Mandelbrot2;
+import sv.sketch.Mandelbrot3;
 import sv.sketch.Schema;
 import sv.sketch.Sketch;
 
@@ -28,7 +30,7 @@ public class SketchView {
 			MIN_GFX_RESOLUTION = 1,
 			MAX_GFX_RESOLUTION = 256,
 			MIN_ITR_RESOLUTION = 1,
-			MAX_ITR_RESOLUTION = 2048;	
+			MAX_ITR_RESOLUTION = 4096;
 	
 	
 	public static void main(String[] args) {
@@ -169,16 +171,21 @@ public class SketchView {
 	}
 	
 	public final static Sketch
-			MANDELBROT_2 = new Mandelbrot2();	
+			MANDELBROT_1 = new Mandelbrot1(),
+			MANDELBROT_2 = new Mandelbrot2(),
+			MANDELBROT_3 = new Mandelbrot3();
 	public final static String[]
 			SKETCH_NAMES = {
-				"MANDELBROT_2"
+				"MANDELBROT_1",
+				"MANDELBROT_2",
+				"MANDELBROT_3"
 			};	
 	public final static Sketch[]
 			SKETCH_ARRAY = {
-				MANDELBROT_2
-			};
-	
+				MANDELBROT_1,
+				MANDELBROT_2,
+				MANDELBROT_3
+			};	
 	
 	public final static Schema
 			EMBER = new Schema(
@@ -231,11 +238,11 @@ public class SketchView {
 				new Color[] {
 						Color.DARK_GRAY,
 						Color.ORANGE,
-						Color.GREEN,
+						new Color(128, 255, 128),
 						Color.ORANGE,
 						Color.DARK_GRAY,
 						Color.ORANGE,
-						Color.GREEN,
+						new Color(128, 255, 128),
 						Color.ORANGE,
 						Color.DARK_GRAY
 				},
@@ -249,17 +256,42 @@ public class SketchView {
 						0.8,
 						0.9,
 						1.0
-				});
+				}),
+			LIGHTNING = new Schema(
+					new Color[] {
+							Color.BLACK,
+							Color.BLUE,
+							Color.MAGENTA,
+							Color.BLUE,
+							Color.WHITE,
+							Color.BLUE,
+							Color.MAGENTA,
+							Color.BLUE,
+							Color.BLACK
+					},
+					new double[] {
+							0.0,
+							0.2,
+							0.4,
+							0.5,
+							0.6,
+							0.7,
+							0.8,
+							0.9,
+							1.0
+					});
 	public final static String[]
 			SCHEMA_NAMES = {
 				"EMBER",
 				"FROST",
-				"JUNGLE"
+				"JUNGLE",
+				"LIGHTNING"
 			};
 	public final static Schema[]
 			SCHEMA_ARRAY = {
 				EMBER,
 				FROST,
-				JUNGLE
+				JUNGLE,
+				LIGHTNING
 			};
 }

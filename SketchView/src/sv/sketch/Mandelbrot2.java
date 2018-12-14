@@ -1,6 +1,7 @@
 package sv.sketch;
 
-public class Mandelbrot2 implements Sketch {	
+public class Mandelbrot2 implements Sketch {
+
 	@Override
 	public double pixel(double x, double y, int resolution) {
 		double
@@ -15,9 +16,12 @@ public class Mandelbrot2 implements Sketch {
 			double
 				j = (c*c - d*d),
 				k = (c*d + d*c);
-			c = a + j;
-			d = b + k;
+			c = (j*j - k*k);
+			d = (j*k + k*j);
+			c = a + c;
+			d = b + d;
 		}
 		return i / resolution;
 	}
+
 }
