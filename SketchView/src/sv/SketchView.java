@@ -73,10 +73,10 @@ public class SketchView {
 				schema_slider = new JSlider(0, SCHEMA_ARRAY.length - 1, 0),
 				sketch_slider = new JSlider(0, SKETCH_ARRAY.length - 1, 0);
 		JTextField
-				gfx_textfield = new JTextField("" + GFX_RESOLUTION, 10),
-				itr_textfield = new JTextField("" + ITR_RESOLUTION, 10),
-				schema_textfield = new JTextField(SCHEMA_NAMES[0], 10),
-				sketch_textfield = new JTextField(SKETCH_NAMES[0], 10);
+				gfx_textfield = new JTextField("" + GFX_RESOLUTION, 4),
+				itr_textfield = new JTextField("" + ITR_RESOLUTION, 4),
+				schema_textfield = new JTextField(SCHEMA_NAMES[0], 16),
+				sketch_textfield = new JTextField(SKETCH_NAMES[0], 16);
 		gfx_slider.addChangeListener((e) -> {
 			int gfx_resolution = gfx_slider.getValue();
 			canvas.set_gfx_resolution(gfx_resolution);
@@ -234,6 +234,29 @@ public class SketchView {
 						0.9,
 						1.0
 				}),
+			STORM = new Schema(
+					new Color[] {
+							Color.BLACK,
+							Color.BLUE,
+							Color.MAGENTA,
+							Color.BLUE,
+							Color.WHITE,
+							Color.BLUE,
+							Color.MAGENTA,
+							Color.BLUE,
+							Color.BLACK
+					},
+					new double[] {
+							0.0,
+							0.2,
+							0.4,
+							0.5,
+							0.6,
+							0.7,
+							0.8,
+							0.9,
+							1.0
+					}),
 			JUNGLE = new Schema(
 				new Color[] {
 						Color.DARK_GRAY,
@@ -257,41 +280,67 @@ public class SketchView {
 						0.9,
 						1.0
 				}),
-			LIGHTNING = new Schema(
+			BLACK_WHITE_1 = new Schema(
 					new Color[] {
 							Color.BLACK,
-							Color.BLUE,
-							Color.MAGENTA,
-							Color.BLUE,
+							Color.WHITE
+					},
+					new double[] {
+							0.0,
+							1.0
+					}),
+			BLACK_WHITE_2 = new Schema(
+					new Color[] {
+							Color.BLACK,
 							Color.WHITE,
-							Color.BLUE,
-							Color.MAGENTA,
-							Color.BLUE,
 							Color.BLACK
 					},
 					new double[] {
 							0.0,
-							0.2,
-							0.4,
 							0.5,
-							0.6,
-							0.7,
-							0.8,
-							0.9,
+							1.0
+					}),
+			WHITE_BLACK_1 = new Schema(
+					new Color[] {
+							Color.WHITE,
+							Color.BLACK
+					},
+					new double[] {
+							0.0,
+							1.0
+					}),
+			WHITE_BLACK_2 = new Schema(
+					new Color[] {
+							Color.WHITE,
+							Color.BLACK,
+							Color.WHITE,
+					},
+					new double[] {
+							0.0,
+							0.5,
 							1.0
 					});
+			
 	public final static String[]
 			SCHEMA_NAMES = {
 				"EMBER",
 				"FROST",
-				"JUNGLE",
-				"LIGHTNING"
+				"STORM",
+				"JUNGLE",				
+				"BLACK & WHITE 1",
+				"BLACK & WHITE 2",
+				"WHITE & BLACK 1",		
+				"WHITE & BLACK 2"
 			};
 	public final static Schema[]
 			SCHEMA_ARRAY = {
 				EMBER,
 				FROST,
+				STORM,
 				JUNGLE,
-				LIGHTNING
+				BLACK_WHITE_1,
+				BLACK_WHITE_2,
+				WHITE_BLACK_1,
+				WHITE_BLACK_2
 			};
 }
