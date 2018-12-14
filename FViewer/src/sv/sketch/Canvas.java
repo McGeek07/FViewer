@@ -1,4 +1,4 @@
-package fv.gui;
+package sv.sketch;
 
 import java.awt.Color;
 import java.awt.Dimension;
@@ -17,17 +17,9 @@ import java.awt.image.BufferedImage;
 
 import javax.swing.JPanel;
 
-import fv.def.Function;
-
 public class Canvas extends JPanel implements KeyListener, MouseListener, MouseWheelListener, MouseMotionListener {
 	private static final long
 			serialVersionUID = 1L;
-	public final static int
-			DEFAULT_CANVAS_W = 1920,
-			DEFAULT_CANVAS_H = 1080,			
-			DEFAULT_GFX_ASPECT_DX = 16,
-			DEFAULT_GFX_ASPECT_DY =  9,
-			DEFAULT_GFX_RESOLUTION = 32;
 	protected int
 			canvas_w,
 			canvas_h,
@@ -35,7 +27,8 @@ public class Canvas extends JPanel implements KeyListener, MouseListener, MouseW
 			canvas_h_2,
 			gfx_aspect_dx,
 			gfx_aspect_dy,
-			gfx_resolution,			
+			gfx_resolution,		
+			itr_resolution,
 			gfx_w,
 			gfx_h,
 			gfx_w_2,
@@ -58,40 +51,8 @@ public class Canvas extends JPanel implements KeyListener, MouseListener, MouseW
 	
 	protected Schema
 			schema;
-	protected Function
-			function;
-	
-	public Canvas(
-			Schema schema,
-			Function function
-			) {
-		this(
-				DEFAULT_CANVAS_W,
-				DEFAULT_CANVAS_H,
-				DEFAULT_GFX_ASPECT_DX,
-				DEFAULT_GFX_ASPECT_DY,
-				DEFAULT_GFX_RESOLUTION,
-				schema,
-				function
-				);
-	}
-	
-	public Canvas(
-			int canvas_w,
-			int canvas_h,
-			Schema schema,
-			Function function
-			) {
-		this(
-				canvas_w,
-				canvas_h,
-				DEFAULT_GFX_ASPECT_DX,
-				DEFAULT_GFX_ASPECT_DY,
-				DEFAULT_GFX_RESOLUTION,
-				schema,
-				function
-				);
-	}
+	protected Sketch
+			sketch;
 	
 	public Canvas(
 			int canvas_w,
@@ -99,22 +60,20 @@ public class Canvas extends JPanel implements KeyListener, MouseListener, MouseW
 			int gfx_aspect_dx,
 			int gfx_aspect_dy,
 			int gfx_resolution,
-			Schema schema,
-			Function function
+			int itr_resolution
 			) {
 		this.canvas_w = canvas_w;
 		this.canvas_h = canvas_h;
 		this.canvas_w_2 = this.canvas_w / 2;
 		this.canvas_h_2 = this.canvas_h / 2;
 		this.gfx_aspect_dx = gfx_aspect_dx;
-		this.gfx_aspect_dy = gfx_aspect_dy;
+		this.gfx_aspect_dy = gfx_aspect_dy;		
 		this.gfx_resolution = gfx_resolution;
+		this.itr_resolution = itr_resolution;
 		this.gfx_w = this.gfx_aspect_dx * this.gfx_resolution;
 		this.gfx_h = this.gfx_aspect_dy * this.gfx_resolution;
 		this.gfx_w_2 = this.gfx_w / 2;
 		this.gfx_h_2 = this.gfx_h / 2;
-		this.schema = schema;
-		this.function = function;
 		
 		this.canvas_tx = canvas_w_2;
 		this.canvas_ty = canvas_h_2;
@@ -161,56 +120,27 @@ public class Canvas extends JPanel implements KeyListener, MouseListener, MouseW
 		this.addMouseMotionListener(this);
 	}
 	
-	public void set_function_schema(Function function, Schema schema) {
-		this.schema = schema;
-		this.function = function;		
-		this.handle_gfx_changed();
-	}
-	
-	public void set_function(Function function) {
-		this.function = function;
-		this.handle_gfx_changed();
-	}
-	
-	public void set_schema(Schema schema) {
-		this.schema = schema;
-		this.handle_gfx_changed();
-	}	
-	
-	public void set_gfx_aspect_ratio(
-			int gfx_aspect_dx,
-			int gfx_aspect_dy
-			) {		
-		this.gfx_aspect_dx = gfx_aspect_dx;
-		this.gfx_aspect_dy = gfx_aspect_dy;
-		this.handle_gfx_changed();
-	}
-	
-	public void set_gfx_aspect_resolution(
-			int gfx_aspect_dx,
-			int gfx_aspect_dy,
-			int gfx_resolution
-			) {
-		this.gfx_aspect_dx = gfx_aspect_dx;
-		this.gfx_aspect_dy = gfx_aspect_dy;
-		this.gfx_resolution = gfx_resolution;		
-		this.handle_gfx_changed();
-	}
-	
-	public void set_gfx_aspect_dx(int gfx_aspect_dx) {
-		this.gfx_aspect_dx = gfx_aspect_dx;
-		this.handle_gfx_changed();
-	}
-	
-	public void set_gfx_aspect_dy(int gfx_aspect_dy) {
-		this.gfx_aspect_dy = gfx_aspect_dy;
-		this.handle_gfx_changed();
-	}
-	
 	public void set_gfx_resolution(int gfx_resolution) {
 		this.gfx_resolution = gfx_resolution;
 		handle_gfx_changed();
 	}
+	
+	public void set_itr_resolution(int itr_resolution) {
+		this.itr_resolution = itr_resolution;
+		handle_gfx_changed();
+	}
+	
+	public void set_schema(Schema schema) {
+		this.schema = schema;
+		this.repaint = true;
+		repaint();
+	}
+	
+	public void set_sketch(Sketch sketch) {
+		this.sketch = sketch;
+		this.repaint= true;
+		repaint();
+	}	
 	
 	public void handle_gfx_changed() {
 		double
@@ -242,33 +172,20 @@ public class Canvas extends JPanel implements KeyListener, MouseListener, MouseW
 				Transparency.OPAQUE
 				);
 		this.gfx = gfx_img.createGraphics();
-		/*
-		if(gfx_w >= gfx_h) {
-			this.gfx_sx = 4. / gfx_w;
-			this.gfx_sy = 4. / gfx_w;
-		} else {
-			this.gfx_sx = 4. / gfx_h;
-			this.gfx_sy = 4. / gfx_h;
-		}
-		
-		*/
-		//this.gfx_tx = - gfx_w_2;
-		//this.gfx_ty = - gfx_h_2;
 		repaint = true;
 		repaint();
-	}
-	
-	
+	}	
 	
 	@Override
 	public void paintComponent(Graphics g) {
 		Graphics2D g2D = (Graphics2D)g;
-		if(repaint && function != null) {
+		if(repaint && sketch != null) {
 			for(int x = 0; x < gfx_w; x ++)
 				for(int y = 0; y < gfx_h; y ++) {
-					double f = function.fitness(
+					double f = sketch.pixel(
 							(x + gfx_tx) * gfx_sx,
-							(y + gfx_ty) * gfx_sy
+							(y + gfx_ty) * gfx_sy,
+							itr_resolution
 							);
 					Color c = schema.color(f);
 					gfx.setColor(c);

@@ -1,8 +1,8 @@
-package fv.gui;
+package sv.sketch;
 
 import java.awt.Color;
 
-public class Schema {	
+public class Schema {
 	public final static Color[]
 			DEFAULT_SCHEMA = {
 					Color.BLACK,
@@ -79,6 +79,4 @@ public class Schema {
 		}
 		return schema[0];
 	}
-	
-	
 }

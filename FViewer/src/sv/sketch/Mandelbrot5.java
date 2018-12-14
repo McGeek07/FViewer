@@ -1,4 +1,4 @@
-package fv.def.impl;
+package sv.sketch;
 
 public class Mandelbrot5 {
 
