@@ -2,12 +2,15 @@ package sv;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Menu;
+import java.awt.MenuBar;
+import java.awt.MenuItem;
+import java.awt.MenuShortcut;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 
 import javax.swing.BoxLayout;
 import javax.swing.JFrame;
-import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JSlider;
 import javax.swing.JTextField;
@@ -120,6 +123,35 @@ public class SketchView {
 		gfx_textfield.setHorizontalAlignment(JTextField.CENTER);
 		gfx_textfield.addKeyListener(new KeyAdapter() {
 			@Override
+			public void keyPressed(KeyEvent e) {
+				if(e.getKeyCode() == KeyEvent.VK_UP) {
+					int gfx_resolution = gfx_slider.getValue();
+					try {
+						gfx_resolution = Integer.parseInt(gfx_textfield.getText()) + 1;
+						if(gfx_resolution < MIN_GFX_RESOLUTION)
+							gfx_resolution = MIN_GFX_RESOLUTION;
+						if(gfx_resolution > MAX_GFX_RESOLUTION)
+							gfx_resolution = MAX_GFX_RESOLUTION;
+						gfx_slider.setValue(gfx_resolution);
+					} catch(Exception ex) {
+						//do nothing
+					}
+				}				
+				if(e.getKeyCode() == KeyEvent.VK_DOWN) {
+					int gfx_resolution = gfx_slider.getValue();
+					try {
+						gfx_resolution = Integer.parseInt(gfx_textfield.getText()) - 1;
+						if(gfx_resolution < MIN_GFX_RESOLUTION)
+							gfx_resolution = MIN_GFX_RESOLUTION;
+						if(gfx_resolution > MAX_GFX_RESOLUTION)
+							gfx_resolution = MAX_GFX_RESOLUTION;
+						gfx_slider.setValue(gfx_resolution);
+					} catch(Exception ex) {
+						//do nothing
+					}
+				}
+			}
+			@Override
 			public void keyReleased(KeyEvent e) {
 				int gfx_resolution = gfx_slider.getValue();
 				try {
@@ -136,6 +168,35 @@ public class SketchView {
 		});
 		itr_textfield.setHorizontalAlignment(JTextField.CENTER);
 		itr_textfield.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyPressed(KeyEvent e) {
+				if(e.getKeyCode() == KeyEvent.VK_UP) {
+					int itr_resolution = itr_slider.getValue();
+					try {
+						itr_resolution = Integer.parseInt(itr_textfield.getText()) + 1;
+						if(itr_resolution < MIN_ITR_RESOLUTION)
+							itr_resolution = MIN_ITR_RESOLUTION;
+						if(itr_resolution > MAX_ITR_RESOLUTION)
+							itr_resolution = MAX_ITR_RESOLUTION;
+						itr_slider.setValue(itr_resolution);
+					} catch(Exception ex) {
+						//do nothing
+					}
+				}				
+				if(e.getKeyCode() == KeyEvent.VK_DOWN) {
+					int itr_resolution = itr_slider.getValue();
+					try {
+						itr_resolution = Integer.parseInt(itr_textfield.getText()) - 1;
+						if(itr_resolution < MIN_ITR_RESOLUTION)
+							itr_resolution = MIN_ITR_RESOLUTION;
+						if(itr_resolution > MAX_ITR_RESOLUTION)
+							itr_resolution = MAX_ITR_RESOLUTION;
+						itr_slider.setValue(itr_resolution);
+					} catch(Exception ex) {
+						//do nothing
+					}
+				}
+			}
 			@Override
 			public void keyReleased(KeyEvent e) {
 				int itr_resolution = itr_slider.getValue();
@@ -179,6 +240,25 @@ public class SketchView {
 		
 		panelA.add(canvas, BorderLayout.CENTER);
 		panelA.add(panelB, BorderLayout.SOUTH );		
+
+		MenuBar
+				menubar = new MenuBar();
+		Menu
+				menu_1 = new Menu("File"),
+				menu_2 = new Menu("View");
+		MenuItem
+				item_1_1 = new MenuItem("Save", new MenuShortcut(KeyEvent.VK_S)),
+				item_1_2 = new MenuItem("Load", new MenuShortcut(KeyEvent.VK_L)),
+				item_2_1 = new MenuItem("Reset", new MenuShortcut(KeyEvent.VK_R, true));
+		
+		menu_1.add(item_1_1);
+		menu_1.add(item_1_2);
+		menu_2.add(item_2_1);
+		
+		menubar.add(menu_1);
+		menubar.add(menu_2);
+		
+		//frame.setMenuBar(menubar);
 		
 		frame.add(panelA);
 		frame.pack();
