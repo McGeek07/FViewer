@@ -1,7 +1,8 @@
 package sv.sketch;
 
-public class Mandelbrot2 implements Sketch {
+import java.math.BigDecimal;
 
+public class Mandelbrot2 implements Sketch {
 	@Override
 	public double pixel(double x, double y, int resolution) {
 		double

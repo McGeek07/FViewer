@@ -10,7 +10,7 @@ public class Mandelbrot1 implements Sketch {
 			d = y,
 			i;
 		for(i = 0; i < resolution; i ++) {
-			double r = c*c + d*d;//Math.sqrt(c * c + d * d);
+			double r = c*c + d*d;
 			if(r > 4) break;				
 			double
 				j = (c*c - d*d),

@@ -25,5 +25,4 @@ public class Mandelbrot3 implements Sketch {
 		}
 		return i / resolution;
 	}
-
 }

@@ -18,10 +18,12 @@ import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 
 import sv.sketch.Canvas;
+import sv.sketch.Cos;
 import sv.sketch.Mandelbrot1;
 import sv.sketch.Mandelbrot2;
 import sv.sketch.Mandelbrot3;
 import sv.sketch.Schema;
+import sv.sketch.Sin;
 import sv.sketch.Sketch;
 
 public class SketchView {	
@@ -35,8 +37,7 @@ public class SketchView {
 			MIN_GFX_RESOLUTION = 1,
 			MAX_GFX_RESOLUTION = 256,
 			MIN_ITR_RESOLUTION = 1,
-			MAX_ITR_RESOLUTION = 4096;
-	
+			MAX_ITR_RESOLUTION = 4096;	
 	
 	public static void main(String[] args) {
 		try {
@@ -273,18 +274,24 @@ public class SketchView {
 	public final static Sketch
 			MANDELBROT_1 = new Mandelbrot1(),
 			MANDELBROT_2 = new Mandelbrot2(),
-			MANDELBROT_3 = new Mandelbrot3();
+			MANDELBROT_3 = new Mandelbrot3(),
+			SIN = new Sin(),
+			COS = new Cos();
 	public final static String[]
 			SKETCH_NAMES = {
 				"MANDELBROT_1",
 				"MANDELBROT_2",
-				"MANDELBROT_3"
+				"MANDELBROT_3",
+				"SIN",
+				"COS"
 			};	
 	public final static Sketch[]
 			SKETCH_ARRAY = {
 				MANDELBROT_1,
 				MANDELBROT_2,
-				MANDELBROT_3
+				MANDELBROT_3,
+				SIN,
+				COS
 			};	
 	
 	public final static Schema
@@ -419,6 +426,29 @@ public class SketchView {
 							0.0,
 							0.5,
 							1.0
+					}),
+			CHRISTMAS = new Schema(
+					new Color[] {
+							Color.WHITE,
+							Color.RED,
+							Color.DARK_GRAY,
+							Color.GREEN,
+							Color.WHITE,
+							Color.RED,
+							Color.DARK_GRAY,
+							Color.GREEN,
+							Color.WHITE,
+					},
+					new double[] {
+							0.0,
+							0.2,
+							0.4,
+							0.5,
+							0.6,
+							0.7,
+							0.8,
+							0.9,
+							1.0
 					});
 			
 	public final static String[]
@@ -430,7 +460,8 @@ public class SketchView {
 				"BLACK & WHITE 1",
 				"BLACK & WHITE 2",
 				"WHITE & BLACK 1",		
-				"WHITE & BLACK 2"
+				"WHITE & BLACK 2",
+				"CHRISTMAS"
 			};
 	public final static Schema[]
 			SCHEMA_ARRAY = {
@@ -441,6 +472,7 @@ public class SketchView {
 				BLACK_WHITE_1,
 				BLACK_WHITE_2,
 				WHITE_BLACK_1,
-				WHITE_BLACK_2
+				WHITE_BLACK_2,
+				CHRISTMAS
 			};
 }
